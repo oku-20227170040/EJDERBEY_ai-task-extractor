@@ -25,3 +25,10 @@ Projeyi çalıştırmak için sisteminizde Python 3.7+ yüklü olmalıdır. Gere
 
 ```bash
 pip install pandas stanza
+
+Çalıştırma
+python EJDERBEY.py
+
+Uygulama açıldığında "ZIP Yükle" butonuna tıklayarak WhatsApp'tan dışa aktardığınız .zip dosyasını seçin. Stanza dil modelinin ilk yüklenmesi (yaklaşık 500MB) biraz zaman alabilir.
+
+
