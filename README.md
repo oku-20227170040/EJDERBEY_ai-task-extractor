@@ -1,11 +1,27 @@
-# ai-task-extractor
-# NLP Tabanlı Görev Çıkarıcı (AI Task Extractor)
+# EJDERBEY - Akademik NLP Görev Asistanı 🐉
 
-## Proje Hakkında
-Bu proje, günlük mesajlaşma metinleri içerisinde kaybolan görev, söz ve planlamaları Doğal Dil İşleme (NLP) teknikleri kullanarak tespit etmeyi amaçlayan bir sistemdir. Geleneksel kural tabanlı yaklaşımlar ve kelime vektörleştirme modelleri (Word2Vec) harmanlanarak, yapısal olmayan gündelik Türkçe sohbet metinlerinden anlamlı görevler çıkarılır.
+EJDERBEY, dışa aktarılmış WhatsApp sohbet (ZIP veya TXT) dosyalarındaki mesajları analiz ederek, metin içerisindeki görevleri, istekleri ve emirleri Doğal Dil İşleme (NLP) teknikleriyle otomatik olarak tespit eden bir masaüstü uygulamasıdır.
 
-## Temel Özellikler
-* **Türkçe Metin Ön İşleme:** Metinlerdeki anlam taşımayan bağlaç ve edatların (Stopwords) temizlenmesi.
-* **Kök Bulma (Stemming):** Gelen Türkçe kelimelerin eklerinin atılarak köklerinin tespit edilmesi (TurkishStemmer entegrasyonu).
-* **Niyet (Intent) Sınıflandırması:** Cümlenin sıradan bir sohbet mi yoksa bir görev/söz mü içerdiğinin analiz edilmesi.
-* **Zaman Çıkarımı:** Tespit edilen görevlerin ne zaman yapılacağına dair zaman etiketlerinin (örn: yarın, akşam) yakalanması.
+* **Otomatik Görev Çıkarımı:** Sohbet içerisindeki günlük konuşmaları filtreleyerek sadece "yapılması gereken" işleri listeler.
+* **Zaman Etiketleme:** Cümle içindeki zaman zarflarını (yarın, akşam, pazartesi vb.) otomatik tespit eder.
+* **Dinamik Yönetim:** Bulunan görevleri kişi bazlı filtreleyebilir, düzenleyebilir veya silebilirsiniz.
+* **Excel Çıktısı:** Elde edilen görev tablosunu CSV/Excel formatında kaydedebilme.
+
+## 🧠 Kullanılan Doğal Dil İşleme (NLP) Teknikleri
+Bu proje basit anahtar kelime eşleştirmesi yerine, Stanford'un **Stanza** kütüphanesini kullanarak derinlemesine morfolojik analiz yapar. Projenin %100'ü kural tabanlı NLP teknikleri üzerine inşa edilmiştir:
+
+1.  **Lemmatization (Kök Bulma):** Kelimelerin çekim eklerinden arındırılarak kök hallerinin (örn: `gerek`, `lazım`, `şart`) tespit edilmesi.
+2.  **POS Tagging (Part-of-Speech):** Cümledeki kelimelerin türlerinin (Fiil, İsim, Sıfat) belirlenmesi (`UPOS="VERB"`).
+3.  **Morphological Analysis:** Fiillerin aldığı kiplerin incelenmesi. Projede şu kipler görev olarak işaretlenmektedir:
+    * `Mood=Nec`: Gereklilik Kipi (-malı, -meli)
+    * `Mood=Opt`: İstek/Öneri Kipi (-alım, -elim)
+    * `Mood=Imp`: Emir Kipi (Sadece aksiyon bildiren eylemler için)
+4.  **Tokenization & Stopword Filtering:** Cümlelerin anlamlı parçalara bölünmesi ve günlük sohbet kalıplarının (zaten, maalesef vb.) filtrelenmesi.
+
+## 🛠️ Kurulum ve Kullanım
+
+### Gereksinimler
+Projeyi çalıştırmak için sisteminizde Python 3.7+ yüklü olmalıdır. Gerekli kütüphaneleri kurmak için:
+
+```bash
+pip install pandas stanza
